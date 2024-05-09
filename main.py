@@ -20,16 +20,12 @@ class ClientSchema(BaseModel):
 
 @app.get('/', response_class=HTMLResponse) # обработка индекса
 async def index(request: Request, response: Response):
-    print(request.cookies)
     token = request.cookies.get('auth-token')
     if not token: return RedirectResponse("/singin")
-    print(token)
 
     moder = session.query(Session).filter(Session.token == token).first()
-    if not moder: response.delete_cookie('auth-token')
+    # if not moder: response.delete_cookie('auth-token')
     
-    print(moder)
-
     return open('html/index.html', encoding='utf-8').read()
 
 
@@ -64,7 +60,7 @@ async def clietnts_list(limit: int, offset: int, request: Request, response: Res
 
     token = request.cookies.get('auth-token')
     moder = session.query(Session).filter(Session.token == token).first()
-    if not moder: response.delete_cookie('auth-token')
+    # if not moder: response.delete_cookie('auth-token')
 
     clients = (
         session.query(
@@ -85,7 +81,7 @@ async def clietnts_list(input: str, request: Request, response: Response) -> Lis
     # input = input.lower() # поиск без учета регистра не работает в slqite
     token = request.cookies.get('auth-token')
     moder = session.query(Session).filter(Session.token == token).first()
-    if not moder: response.delete_cookie('auth-token')
+    # if not moder: response.delete_cookie('auth-token')
     clients = (
         session.query(
             Client,
