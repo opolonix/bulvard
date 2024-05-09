@@ -8,6 +8,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <!--  IOS wep-app  -->
+    <meta name="theme-color" content="#000">
+    <link rel="apple-touch-icon" href="assets/favicon512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
     <meta name="theme-color" content="#000">
 </head>
 <body>
@@ -112,15 +121,17 @@
         }
 
         .tools {
-            position: fixed;
+            background-color: white;
             bottom: 0;
             right: 0;
             padding: 15px;
-            background-color: white;
             display: flex;
-            gap: 5px;
-            align-items: center;
-            justify-content: center;
+            gap: 10px;
+            align-items: right;
+            justify-content: right;
+            position: fixed;
+            width: 100%;
+            margin-bottom: 15px;
         }
         .tools .search {
             display: flex;
@@ -128,24 +139,24 @@
             align-items: center;
             gap: 10px;
             padding: 0 15px 0 0;
-            border: 2px solid #000;
+            border: 3px solid #000;
             font-size: 24px;
             border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            width: fit-content;
         }
         .tools .search.small {
-            width: fit-content;
+            margin-left: 30px;
+            width: 100%;
         }
         .tools .search input {
             height: 50px;
             border: none;
-            outline: none;
-            padding: 0 0 0 15px;
-            font-size: 16px;
+            outline: none;  
+            padding: 0 0px 0 15px;
+            font-size: 18px;
             font-weight: Bold;
-            width: 50px;
+            width: 59px;
             border-radius: 25px 0 0 25px;
             background-color: transparent;
             font-family: "Inter", sans-serif;
@@ -157,7 +168,8 @@
             color: #000000;
         }
         .tools .search.small input::placeholder {
-            color: #333;
+            color: #737373;
+            font-weight: 590; 
         }
         .tools .add-client{
             align-items: center;
@@ -327,31 +339,35 @@
             border: 1px solid #000;
             align-self: stretch;
         }
-
         form h3{
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 590;
             margin: 0;
         }
         form h2 {
             margin: 0 0 6px;
+            font-size: 24px;
             width: fit-content;
         }
         form .buttons{
             display: flex;
-            gap:10px;
+            gap: 10px;
+        }
+        form input[type="text"]{
+            font-size: 16px;
         }
         form input[type="submit"] {
             border: none;
             width: fit-content;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 510;
             padding: 10px 30px;
             align-items: center;
             background-color: #064530;
-            color: #fff;
+            color: white;
             margin: 6px 0 0;
             border-radius: 20px;
+            align-self: stretch;
         }
         form .buttons .reject{
             background-color: #8C8C8C;
@@ -377,7 +393,7 @@
         <h3>Имя Фамилия</h3>
         <input class="login" type="text" placeholder="Игнат Старовойтов">
         <h3>Номер телефона</h3>
-        <input class="" type="text" placeholder="+79780416268" data-phone-pattern >
+        <input type="text" placeholder="+7(978)091-53-41" data-phone-pattern >
         <!-- <div>
             <btn class="coffee-btn" ><img src="sources/plus.svg" alt="-"></btn>
             <div>
@@ -395,9 +411,11 @@
     </form>
 
     <form action="#" class="edit-client hidden">
-        <h2>Клиент</h2>
-        <input class="name" type="text" placeholder="Имя Фамилия*" style="border: none;">
-        <input class="phone" type="text" placeholder="Номер телефона" data-phone-pattern  style="border: none;">
+        <h2>Редактировать клиента</h2>
+        <h3>Новое Имя Фамилия</h3>
+        <input class="name" type="text" placeholder="Валентин Иванов" style="border: none;">
+        <h3>Номер телефона</h3>
+        <input class="phone" type="text" placeholder="+7(978)091-53-41" data-phone-pattern style="border: none;">
         <input type="submit" value="Применить изменения">
     </form>
 
