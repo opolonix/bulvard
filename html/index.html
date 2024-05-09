@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulvar Coffee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <meta name="theme-color" content="#000">
+</head>
+<body>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100svh;
+            background-color: #ffffff;
+        }
+        * {
+            font-family: "Inter", sans-serif;
+        }
+        img {
+            box-sizing: border-box;
+        }
+        header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 5px;
+            background-color: #000;
+            color: #fff;
+            align-items: center;
+        }
+        header div.logo-text {
+            padding: 5px;
+        }
+        header div.logo-text div.logo-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        header div.logo-text div.logo-descr {
+            font-size: 14px;
+            color: #b3b3b3;
+        }
+        header a.logo-img img {
+            width: 50px;
+        }
+
+        .clients {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px;
+            
+        }
+        .clients .client{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px;
+            border-bottom: 2px dotted #cccccc;
+            border-spacing: 10px;
+            max-width: 350px;
+        }
+        .clients .client:last-child {
+            border: none;
+        }
+        .clients .client .new_coffee {
+            border: 2px solid #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+        .info .name {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .info .bottom-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+        .info .bottom-info .coffee-fill {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .info .bottom-info .coffee-fill .item {
+            border: 1px solid #00000050;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .info .bottom-info .coffee-fill .item.filled {
+            border: 1px solid #064530;
+            background-color: #064530;
+        }
+
+        .tools {
+            padding-top: 10px;
+            margin: 0 0 0 auto;
+            position: relative;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+        .tools .search {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            padding: 0 15px 0 0;
+            border: 2px solid #000;
+            font-size: 24px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            width: fit-content;
+        }
+        .tools .search.small {
+            width: fit-content;
+        }
+        .tools .search input {
+            height: 39px;
+            border: none;
+            outline: none;
+            padding: 0 0 0 20px;
+            font-size: 16px;
+            width: 100px;
+            border-radius: 20px 0 0 20px;
+            background-color: transparent;
+            font-family: "Inter", sans-serif;
+        }
+        .tools .search.small input {
+            width: 100%;
+        }
+        .tools .search input::placeholder {
+            color: #000000;
+        }
+        .tools .search.small input::placeholder {
+            color: #333;
+        }
+        .tools .add-client{
+            background-color: #000;
+            padding: 9.5px;
+            box-sizing: border-box;
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+    <header>
+        <div class="logo-text">
+            <div class="logo-name">Bulevard Coffee</div>
+            <div class="logo-descr">Постоянные покупатели</div>
+        </div>
+        <a class="logo-img" href="/">
+            <img src="./sources/лого.png" alt="Buleward Coffee логотип">
+        </a>
+    </header>
+    <div class="tools">
+        <div class="search">
+            <input type="text" placeholder="Поиск">
+            <img src="sources/search.svg" alt="Поиск">
+        </div>
+        <div class="add-client"><img src="sources/plus.svg" alt="Поиск"></div>
+    </div>
+    <div class="clients"></div>
+    <script>
+        let full_loading = false
+        let offset = 0
+        const clients_wrapper = document.querySelector('.clients')
+        const add_clients = (clients) => {
+            clients.forEach(e => {
+                console.log(e.coffee_count);
+                clients_wrapper.innerHTML += `
+                    <div class="client" db-id="${e.id}">
+                        <div class="info">
+                            <div class="name" onclick="show_edit_client_popup(${e.id})">${e.name}</div>
+                            <div class="bottom-info">
+                                <div class="coffee-fill">
+                                    <div class="item ${e.coffee_count % 5 > 0 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 5 > 1 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 5 > 2 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 5 > 3 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 5 > 4 ? 'filled' : ''}"></div>
+                                    (${e.coffee_count})
+                                </div>
+                                <div class="phone-number">${e.phone}</div>
+                            </div>
+                        </div>
+                        <div class="new_coffee" onclick="show_new_coffee_popup(${e.id})"></div>
+                    </div>`
+            });
+        }
+        const getParams = (path = null, params) => {
+            str = []
+            for (const param in params) {
+                str.push(`${encodeURIComponent(param)}=${encodeURIComponent(params[param])}`) 
+            }
+            str = str.join('&')
+            return path == null ? str : path + '?' + str
+        }
+        const main = async () => {
+            limit = 20
+            r = await fetch((getParams('/clients', {
+                limit: limit, offset: offset
+            })))
+            clients = await r.json()
+            offset += clients.length
+            
+            if (clients.length != limit) full_loading = true
+            add_clients(clients)
+        }
+        main()
+
+        window.addEventListener("scroll", async (e) => {
+            if (full_loading) return
+            const contentHeight = document.documentElement.scrollHeight;
+            const visibleHeight = window.innerHeight;
+            const scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+
+            if (contentHeight - visibleHeight - scrollPosition <= 100) {
+                limit = 20
+                r = await fetch((getParams('/clients', {
+                    limit: limit, offset: offset
+                })))
+                clients = await r.json()
+                offset += clients.length
+
+                if (clients.length != limit) full_loading = true
+                add_clients(clients)
+            }
+        });
+
+        const show_edit_client_popup = () => {
+            
+            document.querySelector('.edit-client').classList.toggle('hidden')
+            document.querySelector('.background').classList.toggle('hidden')
+        }
+        const show_new_coffee_popup = () => {
+            
+            document.querySelector('.new-coffee').classList.toggle('hidden')
+            document.querySelector('.background').classList.toggle('hidden')
+        }
+
+        const search_btn = document.querySelector('.tools .search')
+        const input = document.querySelector('.tools .search input')
+        search_btn.addEventListener("click", e => {
+            search_btn.classList.toggle('small')
+            document.querySelector('.tools .search input').focus()
+        })
+        input.addEventListener("blur", e => {
+            search_btn.classList.toggle('small')
+        })
+        input.addEventListener("input", async e => {
+            if (input.value != '') {
+                r = await fetch(getParams('/search', {
+                    input: input.value
+                }))
+                r = await r.json()
+                clients_wrapper.innerHTML = ''
+                add_clients(r)
+                if (r.length == 0) clients_wrapper.innerHTML = '<div style="margin: 10px auto; font-weight: bold; color: #888;">Ничего не найдено!</div>'
+            }
+            else {
+                input.blur()
+                clients_wrapper.innerHTML = ''
+
+                limit = 20
+                r = await fetch((getParams('/clients', {
+                    limit: limit, offset: 0
+                })))
+                clients = await r.json()
+                offset = clients.length
+
+                if (clients.length != limit) full_loading = true
+                add_clients(clients)
+            }
+        })
+
+    </script>
+
+    <style>
+        form {
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            height: fit-content;
+            padding: 15px;
+            gap: 10px;
+            background-color: #fff;
+            border-radius: 40px;
+            align-items: center;
+            box-shadow: 0 0 20px 0px #0000002f;
+        }
+        form input {
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid #000;
+        } 
+        form h2 {
+            margin: 0 0 6px;
+            width: fit-content;
+        } 
+        form input[type="submit"] {
+            border: none;
+            width: fit-content;
+            font-size: 14px;
+            padding: 10px 30px;
+            align-items: center;
+            background-color: #064530;
+            color: #fff;
+            font-weight: bold;
+            margin: 6px 0 0;
+            border-radius: 20px;
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff34;
+            backdrop-filter: blur(7px);
+            z-index: 1;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+
+    <form action="#" class="new-client hidden">
+        <h2>Новый клиент</h2>
+        <input class="login" type="text" placeholder="Имя Фамилия">
+        <input class="" type="text" placeholder="Номер телефона" data-phone-pattern >
+        <input type="submit" value="Добавить">
+    </form>
+
+    <form action="#" class="edit-client hidden">
+        <h2>Клиент</h2>
+        <input class="name" type="text" placeholder="Имя Фамилия" style="border: none;">
+        <input class="phone" type="text" placeholder="Номер телефона" data-phone-pattern  style="border: none;">
+        <input type="submit" value="Применить изменения">
+    </form>
+
+    <form action="#" class="new-coffee hidden">
+        <h2>Новая продажа</h2>
+        <input class="name" type="text" placeholder="Колличество">
+        <input class="phone" type="text" placeholder="Комментарий" data-phone-pattern >
+        <input type="submit" value="Записать">
+    </form>
+
+    <div class="background hidden"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var eventCalllback = function (e) {
+                var el = e.target,
+                clearVal = el.dataset.phoneClear,
+                pattern = el.dataset.phonePattern,
+                matrix_def = "+7(___) ___-__-__",
+                matrix = pattern ? pattern : matrix_def,
+                i = 0,
+                def = matrix.replace(/\D/g, ""),
+                val = e.target.value.replace(/\D/g, "");
+                if (clearVal !== 'false' && e.type === 'blur') {
+                    if (val.length < matrix.match(/([\_\d])/g).length) {
+                        e.target.value = '';
+                        return;
+                    }
+                }
+                if (def.length >= val.length) val = def;
+                e.target.value = matrix.replace(/./g, function (a) {
+                    return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a
+                });
+            }
+            var phone_inputs = document.querySelectorAll('[data-phone-pattern]');
+            for (let elem of phone_inputs) {
+                for (let ev of ['input', 'blur', 'focus']) {
+                    elem.addEventListener(ev, eventCalllback);
+                }
+            }
+        });
+        document.querySelector(".tools .add-client").addEventListener('click', e => {
+            document.querySelector('.new-client').classList.toggle('hidden')
+            document.querySelector('.background').classList.toggle('hidden')
+        })
+        document.querySelector(".background").addEventListener('click', e => {
+            document.querySelector('.new-client').classList.add('hidden')
+            document.querySelector('.background').classList.add('hidden')
+            document.querySelector('.edit-client').classList.add('hidden')
+            document.querySelector('.new-coffee').classList.add('hidden')
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#000">
+    <title>Bulvar Coffee</title>
+</head>
+<body>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100svh;
+            background-color: #ebebeb;
+        }
+        * {
+            font-family: "Inter", sans-serif;
+        }
+        img {
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        form {
+
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            height: fit-content;
+            padding: 15px;
+            gap: 10px;
+            background-color: #fff;
+            border-radius: 40px;
+            align-items: center;
+            box-shadow: 0 0 20px 0px #0000000d;
+        }
+        form input {
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid #000;
+        } 
+        form h2 {
+            margin: 0 0 6px;
+            width: fit-content;
+        } 
+        form input[type="submit"] {
+            border: none;
+            width: fit-content;
+            font-size: 14px;
+            padding: 10px 30px;
+            align-items: center;
+            background-color: #064530;
+            color: #fff;
+            font-weight: bold;
+            margin: 6px 0 0;
+            border-radius: 20px;
+        } 
+        header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 5px;
+            background-color: #000;
+            color: #fff;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        header div.logo-text {
+            padding: 5px;
+        }
+        header div.logo-text div.logo-name {
+            font-size: 24px;
+        }
+        header div.logo-text div.logo-descr {
+            font-size: 14px;
+            color: #b3b3b3;
+        }
+        header a.logo-img img {
+            width: 50px;
+        }
+    </style>
+    <header>
+        <div class="logo-text">
+            <div class="logo-name">Buleward Coffee</div>
+            <div class="logo-descr">Постоянные покупатели</div>
+        </div>
+        <a class="logo-img" href="/">
+            <img src="./sources/лого.png" alt="Buleward Coffee логотип">
+        </a>
+    </header>
+    <form action="#">
+        <h2>Авторизация!</h2>
+        <input class="login" type="text" placeholder="Логин" autocomplete="username">
+        <input class="password" type="text" placeholder="Пароль" autocomplete="current-password">
+        <input type="submit" value="Войти">
+    </form>
+
+    <script>
+        const getParams = (path = null, params) => {
+            str = []
+            for (const param in params) {
+                str.push(`${encodeURIComponent(param)}=${encodeURIComponent(params[param])}`) 
+            }
+            str = str.join('&')
+            return path == null ? str : path + '?' + str
+        }
+        const form = document.querySelector('form')
+        const login = form.querySelector('input.login')
+        const password = form.querySelector('input.password')
+        form.addEventListener("submit", async e => {
+            e.preventDefault()
+            data = {
+                "password": password.value,
+                "login": login.value
+            }
+            result = await fetch(getParams("/session", data))
+            result = await result.json()
+            if (result.ok == true) window.location = '/'
+            else {
+                alert("Логин или парль не верные!")
+            }
+        })
+    </script>
+</body>
+</html>
