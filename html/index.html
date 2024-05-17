@@ -20,6 +20,7 @@
     <meta name="theme-color" content="#000">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script> <!-- библиотека кьюаркодов -->
     <style>
         html, body {
             padding: 0;
@@ -205,12 +206,19 @@
         let full_loading = false
         let offset = 0
         const clients_wrapper = document.querySelector('.clients')
+        const formatPhoneNumber = (number) => {
+            const regex = /^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/;
+            const parts = number.match(regex);
+            
+            if (parts) return '+' + parts[1] + '(' + parts[2] + ')' + parts[3] + '-' + parts[4] + '-' + parts[5]
+            else return number
+        }
         const add_clients = (clients) => {
             clients.forEach(e => {
                 clients_wrapper.innerHTML += `
                     <div class="client" db-id="${e.id}">
                         <div class="info">
-                            <div class="name" onclick="show_edit_client_popup(${e.id}, '${e.name}', '${e.phone}', '${e.coffee_count}')">${e.name}</div>
+                            <div class="name" onclick="show_edit_client_popup(${e.public_id}, ${e.id}, '${e.name}', '${e.phone}', '${e.coffee_count}')">${e.name}</div>
                             <div class="bottom-info">
                                 <div class="coffee-fill">
                                     <div class="item ${e.coffee_count % 7 > 0 ? 'filled' : ''}"></div>
@@ -222,7 +230,7 @@
                                     <div class="item ${e.coffee_count % 7 > 6 ? 'filled' : ''}"></div>
                                     (${e.coffee_count})
                                 </div>
-                                <div class="phone-number">+${e.phone}</div>
+                                <div class="phone-number">${formatPhoneNumber(e.phone)}</div>
                             </div>
                         </div>
                         <div class="new_coffee" onclick="show_new_coffee_popup(${e.id})"></div>
@@ -270,14 +278,16 @@
             }
         });
 
-        const show_edit_client_popup = (client, name, phone, coffee_count) => {
+        const show_edit_client_popup = (public_id, client, name, phone, coffee_count) => {
             elem = document.querySelector('.edit-client')
             elem.classList.toggle('hidden')
             document.querySelector('.background').classList.toggle('hidden')
             
             elem.setAttribute('client-id', client);
+            url = window.location.origin + '/' + public_id
+            QRCode.toCanvas(document.querySelector(".client-qr"), url)
             elem.querySelector(".name").value = name;
-            elem.querySelector(".phone").value = phone;
+            elem.querySelector(".phone").value = formatPhoneNumber(phone);
         }
         const show_new_coffee_popup = (ind) => {
             
@@ -426,7 +436,8 @@
     </form>
 
     <form action="#" class="edit-client hidden">
-        <h2>Редактировать клиента</h2>
+        <h2>Клиент</h2>
+        <canvas class="client-qr"></canvas>
         <input class="name" type="text" placeholder="Валентин Иванов" style="border: none;">
         <input class="phone" type="text" placeholder="+7(978)091-53-41" data-phone-pattern style="border: none;">
         <input type="submit" value="Применить изменения">
@@ -491,7 +502,7 @@
                 var el = e.target,
                 clearVal = el.dataset.phoneClear,
                 pattern = el.dataset.phonePattern,
-                matrix_def = "+7(___) ___-__-__",
+                matrix_def = "+7(___)___-__-__",
                 matrix = pattern ? pattern : matrix_def,
                 i = 0,
                 def = matrix.replace(/\D/g, ""),

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>Добро пожаловать!</title>
+</head>
+<body>
+    <style>
+        .unfind {
+            font-family: "Inter", sans-serif; 
+            color: #ffffff; 
+            font-weight: bold; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+        .unfind::selection{
+            color: #ffffff; 
+            background-color: #0d3528;
+
+        }
+    </style>
+    <div class="user"></div>
+    <script>
+        const getParams = (path = null, params) => {
+            str = []
+            for (const param in params) {
+                str.push(`${encodeURIComponent(param)}=${encodeURIComponent(params[param])}`) 
+            }
+            str = str.join('&')
+            return path == null ? str : path + '?' + str
+        }
+        const main = async () => {
+            client = await fetch(getParams("/get-client", 
+                {client: window.location.pathname.replace(/[^\d;]/g, '')}
+            ))
+            client = await client.json()
+            if (client == null) {
+                document.querySelector('.user').innerHTML = '<div class="unfind">Извнините, ничего не найдено!</div>'
+                document.querySelector('body').style.backgroundColor = "#064530"
+                return
+            }
+            client = { // информация о клиенте
+                "public_id": client.public_id,
+                "name": client.name,
+                "phone": client.phone, // здесь от номера только цифры
+                "created_at": new Date(client.created_at), // время создания записи
+                "coffee_count": client.coffee_count // колво купленного кофе
+            }
+            document.querySelector('.user').innerHTML = client
+        }
+        main()
+    </script>
+</body>
+</html>

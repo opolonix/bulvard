@@ -109,6 +109,32 @@ async def clietnts_list(name: str, phone: str, request: Request, response: Respo
 
     return {"ok": True, "message": "Запись добавлена!"}
 
+@app.get('/get-client')
+async def clietnt(client: int, request: Request, response: Response) -> ClientSchema | None:
+
+    
+    client_db = (
+        session.query(
+            Client,
+            sqlalchemy.func.sum(Coffee.count).label("coffee_count") # заменить на func.count и будет колличество посещений
+        )
+        .outerjoin(Coffee, Client.id == Coffee.client_id)
+        .filter(Client.public_id == client)
+        .group_by(Client.id)
+        .first()
+    )
+
+    if not client_db: return None
+
+    return ClientSchema(
+        id=client_db[0].id,
+        public_id=client_db[0].public_id,
+        name=client_db[0].name, 
+        phone=client_db[0].phone, 
+        created_at=client_db[0].created_at, 
+        last_update=client_db[0].last_update, 
+        coffee_count=client_db[1] if client_db[1] else 0)
+
 
 @app.get('/new-coffee')
 async def clietnts_list(client: int, count, comment: str, request: Request, response: Response) -> dict:
@@ -180,7 +206,11 @@ async def clietnts_list(input: str, request: Request, response: Response) -> Lis
     
     return [ClientSchema(id=c.id, public_id=c.public_id, name=c.name, phone=c.phone, created_at=c.created_at, last_update=c.last_update, coffee_count=coffee_count) for c, coffee_count in clients]
 
+@app.get('/{client}', response_class=HTMLResponse)
+async def clietnt(client: int, request: Request, response: Response):
+    return open('html/client.html', encoding='utf-8').read()
+
 app.mount("/sources", StaticFiles(directory="sources"), name="sources")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=7741)
+    uvicorn.run("main:app", host="0.0.0.0", port=7741, reload=True)
