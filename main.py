@@ -47,10 +47,12 @@ async def new_session(password: str, login: str, request: Request, response: Res
     moder = session.query(Moderator).filter(Moderator.login == login and Moderator.password == password).first()
     if not moder: return {"ok": False}
 
-    s = Session(moderator = moder.id)
+    s = Session(
+        token=''.join(random.choice(string.ascii_letters + string.digits) for i in range(64)),
+        moderator = moder.id
+    )
     session.add(s)
     session.commit()
-    
     response.set_cookie('auth-token', s.token)
 
     return {"ok": True}

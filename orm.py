@@ -67,7 +67,7 @@ class Session(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    token = Column(String, unique=True, index=True)
+    token = Column(String, unique=True, index=True, nullable=False)
     moderator = Column(Integer, ForeignKey('moderators.id'))
 
     init = Column(DateTime, default=datetime.datetime.now)
