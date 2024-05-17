@@ -8,6 +8,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <!--  IOS wep-app  -->
+    <meta name="theme-color" content="#000">
+    <link rel="apple-touch-icon" href="assets/favicon512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
     <meta name="theme-color" content="#000">
 </head>
 <body>
@@ -39,11 +48,12 @@
         }
         header div.logo-text div.logo-name {
             font-size: 24px;
-            font-weight: bold;
+            font-weight: Bold;
         }
         header div.logo-text div.logo-descr {
             font-size: 14px;
-            color: #B3B3B3;
+            color: #737373;
+            font-weight: Medium;
         }
         header a.logo-img img {
             width: 50px;
@@ -54,15 +64,14 @@
             flex-direction: column;
             gap: 5px;
             padding: 5px;
-            
         }
         .clients .client{
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            padding: 5px;
-            border-bottom: 2px dotted #CCC;
+            padding: 10px 20px;
+            border-bottom: 2px dotted #808080;
             border-spacing: 10px;
             max-width: 350px;
         }
@@ -70,11 +79,15 @@
             border: none;
         }
         .clients .client .new_coffee {
-            border: 2px solid #000;
-            width: 20px;
-            height: 20px;
+            border: 2.5px solid #000;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            margin: 10px;
+        }
+        .info{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
         .info .name {
             font-size: 22px;
@@ -89,27 +102,36 @@
         .info .bottom-info .coffee-fill {
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 5px;
         }
         .info .bottom-info .coffee-fill .item {
-            border: 1px solid #00000050;
-            width: 10px;
-            height: 10px;
+            border: 2px solid #00000050;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
         }
         .info .bottom-info .coffee-fill .item.filled {
-            border: 1px solid #064530;
+            border: 2px solid #064530;
             background-color: #064530;
+        }
+        .info .bottom-info .phone-number{
+            font-size: 14px;
+            font-weight: Medium;
+            color: #00000065;
         }
 
         .tools {
-            padding-top: 10px;
-            margin: 0 0 0 auto;
-            position: relative;
+            background-color: white;
+            bottom: 0;
+            right: 0;
+            padding: 15px;
             display: flex;
-            gap: 5px;
-            align-items: center;
-            justify-content: center;
+            gap: 10px;
+            align-items: right;
+            justify-content: right;
+            position: fixed;
+            width: 100%;
+            margin-bottom: 15px;
         }
         .tools .search {
             display: flex;
@@ -117,24 +139,25 @@
             align-items: center;
             gap: 10px;
             padding: 0 15px 0 0;
-            border: 2px solid #000;
+            border: 3px solid #000;
             font-size: 24px;
-            border-radius: 20px;
+            border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            width: fit-content;
         }
         .tools .search.small {
-            width: fit-content;
+            margin-left: 30px;
+            width: 100%;
         }
         .tools .search input {
-            height: 39px;
+            height: 50px;
             border: none;
-            outline: none;
-            padding: 0 0 0 20px;
-            font-size: 16px;
-            width: 100px;
-            border-radius: 20px 0 0 20px;
+            outline: none;  
+            padding: 0 0px 0 15px;
+            font-size: 18px;
+            font-weight: Bold;
+            width: 59px;
+            border-radius: 25px 0 0 25px;
             background-color: transparent;
             font-family: "Inter", sans-serif;
         }
@@ -145,14 +168,16 @@
             color: #000000;
         }
         .tools .search.small input::placeholder {
-            color: #333;
+            color: #737373;
+            font-weight: 590; 
         }
         .tools .add-client{
+            align-items: center;
             background-color: #000;
-            padding: 9.5px;
+            padding: 13.2px;
             box-sizing: border-box;
-            width: 43px;
-            height: 43px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
         }
@@ -160,12 +185,14 @@
     <header>
         <div class="logo-text">
             <div class="logo-name">Bulevard Coffee</div>
-            <div class="logo-descr">Постоянные покупатели</div>
+            <div class="logo-descr">ЛЮБИМЫЕ ГОСТИ</div>
         </div>
         <a class="logo-img" href="/">
             <img src="./sources/лого.png" alt="Buleward Coffee логотип">
         </a>
     </header>
+    
+    <div class="clients"></div>
     <div class="tools">
         <div class="search">
             <input type="text" placeholder="Поиск">
@@ -173,7 +200,6 @@
         </div>
         <div class="add-client"><img src="sources/plus.svg" alt="Поиск"></div>
     </div>
-    <div class="clients"></div>
     <script>
         let full_loading = false
         let offset = 0
@@ -303,7 +329,7 @@
             padding: 15px;
             gap: 10px;
             background-color: #fff;
-            border-radius: 40px;
+            border-radius: 35px;
             align-items: center;
             box-shadow: 0 0 20px 0px #0000002f;
         }
@@ -311,22 +337,40 @@
             padding: 10px 15px;
             border-radius: 12px;
             border: 1px solid #000;
-        } 
+            align-self: stretch;
+        }
+        form h3{
+            font-size: 20px;
+            font-weight: 590;
+            margin: 0;
+        }
         form h2 {
             margin: 0 0 6px;
+            font-size: 24px;
             width: fit-content;
-        } 
+        }
+        form .buttons{
+            display: flex;
+            gap: 10px;
+        }
+        form input[type="text"]{
+            font-size: 16px;
+        }
         form input[type="submit"] {
             border: none;
             width: fit-content;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 510;
             padding: 10px 30px;
             align-items: center;
             background-color: #064530;
-            color: #fff;
-            font-weight: bold;
+            color: white;
             margin: 6px 0 0;
             border-radius: 20px;
+            align-self: stretch;
+        }
+        form .buttons .reject{
+            background-color: #8C8C8C;
         }
         .background {
             position: absolute;
@@ -334,7 +378,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffffff34;
+            background-color: #00000099;
+            -webkit-backdrop-filter: blur(7px);
             backdrop-filter: blur(7px);
             z-index: 1;
         }
@@ -345,21 +390,38 @@
 
     <form action="#" class="new-client hidden">
         <h2>Новый клиент</h2>
-        <input class="login" type="text" placeholder="Имя Фамилия">
-        <input class="" type="text" placeholder="Номер телефона" data-phone-pattern >
-        <input type="submit" value="Добавить">
+        <h3>Имя Фамилия</h3>
+        <input class="login" type="text" placeholder="Игнат Старовойтов">
+        <h3>Номер телефона</h3>
+        <input type="text" placeholder="+7(978)091-53-41" data-phone-pattern >
+        <!-- <div>
+            <btn class="coffee-btn" ><img src="sources/plus.svg" alt="-"></btn>
+            <div>
+                <h3>Уже выпито</h3>
+                <div></div>
+            </div>
+            <btn class="coffee-btn"><img src="sources/plus.svg" alt="-"></btn>
+        </div> -->
+        <div class="buttons">
+            <input class="reject" type="submit" value="Отмена">
+            <input type="submit" value="Добавить">
+        </div>
+        
+        
     </form>
 
     <form action="#" class="edit-client hidden">
-        <h2>Клиент</h2>
-        <input class="name" type="text" placeholder="Имя Фамилия" style="border: none;">
-        <input class="phone" type="text" placeholder="Номер телефона" data-phone-pattern  style="border: none;">
+        <h2>Редактировать клиента</h2>
+        <h3>Новое Имя Фамилия</h3>
+        <input class="name" type="text" placeholder="Валентин Иванов" style="border: none;">
+        <h3>Номер телефона</h3>
+        <input class="phone" type="text" placeholder="+7(978)091-53-41" data-phone-pattern style="border: none;">
         <input type="submit" value="Применить изменения">
     </form>
 
     <form action="#" class="new-coffee hidden">
         <h2>Новая продажа</h2>
-        <input class="name" type="text" placeholder="Колличество">
+        <input class="name" type="text" placeholder="Количество">
         <input class="phone" type="text" placeholder="Комментарий" data-phone-pattern >
         <input type="submit" value="Записать">
     </form>
