@@ -80,8 +80,8 @@
         }
         .clients .client .new_coffee {
             border: 2.5px solid #000;
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
         }
         .info{
@@ -138,7 +138,7 @@
             flex-direction: row;
             align-items: center;
             gap: 10px;
-            padding: 0 15px 0 0;
+            padding: 0 25px 0 0;
             border: 3px solid #000;
             font-size: 24px;
             border-radius: 25px;
@@ -148,12 +148,13 @@
         .tools .search.small {
             margin-left: 30px;
             width: 100%;
+            max-width: 500px;
         }
         .tools .search input {
             height: 50px;
             border: none;
             outline: none;  
-            padding: 0 0px 0 15px;
+            padding: 0 0 0 25px;
             font-size: 18px;
             font-weight: Bold;
             width: 59px;
@@ -206,21 +207,22 @@
         const clients_wrapper = document.querySelector('.clients')
         const add_clients = (clients) => {
             clients.forEach(e => {
-                console.log(e.coffee_count);
                 clients_wrapper.innerHTML += `
                     <div class="client" db-id="${e.id}">
                         <div class="info">
-                            <div class="name" onclick="show_edit_client_popup(${e.id})">${e.name}</div>
+                            <div class="name" onclick="show_edit_client_popup(${e.id}, '${e.name}', '${e.phone}', '${e.coffee_count}')">${e.name}</div>
                             <div class="bottom-info">
                                 <div class="coffee-fill">
-                                    <div class="item ${e.coffee_count % 5 > 0 ? 'filled' : ''}"></div>
-                                    <div class="item ${e.coffee_count % 5 > 1 ? 'filled' : ''}"></div>
-                                    <div class="item ${e.coffee_count % 5 > 2 ? 'filled' : ''}"></div>
-                                    <div class="item ${e.coffee_count % 5 > 3 ? 'filled' : ''}"></div>
-                                    <div class="item ${e.coffee_count % 5 > 4 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 0 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 1 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 2 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 3 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 4 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 5 ? 'filled' : ''}"></div>
+                                    <div class="item ${e.coffee_count % 7 > 6 ? 'filled' : ''}"></div>
                                     (${e.coffee_count})
                                 </div>
-                                <div class="phone-number">${e.phone}</div>
+                                <div class="phone-number">+${e.phone}</div>
                             </div>
                         </div>
                         <div class="new_coffee" onclick="show_new_coffee_popup(${e.id})"></div>
@@ -245,6 +247,7 @@
             
             if (clients.length != limit) full_loading = true
             add_clients(clients)
+            if (clients.length == 0) clients_wrapper.innerHTML = '<div style="margin: 20px auto; font-weight: bold; color: #888;">Пусто!</div>'
         }
         main()
 
@@ -267,25 +270,37 @@
             }
         });
 
-        const show_edit_client_popup = () => {
-            
-            document.querySelector('.edit-client').classList.toggle('hidden')
+        const show_edit_client_popup = (client, name, phone, coffee_count) => {
+            elem = document.querySelector('.edit-client')
+            elem.classList.toggle('hidden')
             document.querySelector('.background').classList.toggle('hidden')
+            
+            elem.setAttribute('client-id', client);
+            elem.querySelector(".name").value = name;
+            elem.querySelector(".phone").value = phone;
         }
-        const show_new_coffee_popup = () => {
+        const show_new_coffee_popup = (ind) => {
             
             document.querySelector('.new-coffee').classList.toggle('hidden')
             document.querySelector('.background').classList.toggle('hidden')
+            document.querySelector('.new-coffee').setAttribute('client-id', ind);
+            // document.querySelector('.new-coffee').setAttribute('client-name', name);
         }
 
         const search_btn = document.querySelector('.tools .search')
         const input = document.querySelector('.tools .search input')
         search_btn.addEventListener("click", e => {
-            search_btn.classList.toggle('small')
-            document.querySelector('.tools .search input').focus()
+            if (search_btn.classList.contains('small')) {
+                search_btn.classList.remove('small')
+                document.querySelector('.tools .search input').blur()
+            }
+            else {
+                search_btn.classList.add('small')
+                document.querySelector('.tools .search input').focus()
+            }
         })
         input.addEventListener("blur", e => {
-            search_btn.classList.toggle('small')
+            search_btn.classList.remove('small')
         })
         input.addEventListener("input", async e => {
             if (input.value != '') {
@@ -365,7 +380,7 @@
             align-items: center;
             background-color: #064530;
             color: white;
-            margin: 6px 0 0;
+            margin: 6px auto 0;
             border-radius: 20px;
             align-self: stretch;
         }
@@ -391,9 +406,9 @@
     <form action="#" class="new-client hidden">
         <h2>Новый клиент</h2>
         <h3>Имя Фамилия</h3>
-        <input class="login" type="text" placeholder="Игнат Старовойтов">
+        <input class="input-name" type="text" placeholder="Игнат Старовойтов">
         <h3>Номер телефона</h3>
-        <input type="text" placeholder="+7(978)091-53-41" data-phone-pattern >
+        <input type="text" class="input-phone" placeholder="+7(978)091-53-41" data-phone-pattern >
         <!-- <div>
             <btn class="coffee-btn" ><img src="sources/plus.svg" alt="-"></btn>
             <div>
@@ -412,22 +427,65 @@
 
     <form action="#" class="edit-client hidden">
         <h2>Редактировать клиента</h2>
-        <h3>Новое Имя Фамилия</h3>
         <input class="name" type="text" placeholder="Валентин Иванов" style="border: none;">
-        <h3>Номер телефона</h3>
         <input class="phone" type="text" placeholder="+7(978)091-53-41" data-phone-pattern style="border: none;">
         <input type="submit" value="Применить изменения">
     </form>
 
     <form action="#" class="new-coffee hidden">
         <h2>Новая продажа</h2>
-        <input class="name" type="text" placeholder="Количество">
-        <input class="phone" type="text" placeholder="Комментарий" data-phone-pattern >
+        <h3>Количество</h3>
+        <input class="input-count" type="text" placeholder="Количество" value="1" numeric>
+        <h3>Комментарий</h3>
+        <input class="input-comment" type="text" placeholder="Комментарий" value="Кофе" >
         <input type="submit" value="Записать">
     </form>
 
     <div class="background hidden"></div>
     <script>
+        const new_client = document.querySelector('.new-client')
+        new_client.addEventListener("submit", async e => {
+            e.preventDefault()
+
+            r = await fetch(getParams(
+                "/new-client", {
+                    name: new_client.querySelector(".input-name").value,
+                    phone: new_client.querySelector(".input-phone").value
+                }
+            ))
+            r = await r.json()
+            if (!r.ok) {
+                alert(r.message)
+                return
+            }
+            else {
+                window.location.reload()
+            }
+        })
+
+        const new_coffee = document.querySelector('.new-coffee')
+        new_coffee.addEventListener("submit", async e => {
+            e.preventDefault()
+            client = new_coffee.getAttribute('client-id')
+            
+            r = await fetch(getParams(
+                "/new-coffee", {
+                    count: Number(new_coffee.querySelector(".input-count").value),
+                    comment: new_coffee.querySelector(".input-comment").value,
+                    client: Number(client)
+                }
+            ))
+            r = await r.json()
+            if (!r.ok) {
+                alert(r.message)
+                return
+            }
+            else {
+                window.location.reload()
+            }
+        })
+    </script>
+    <script> // код для маски на номер телефона
         document.addEventListener("DOMContentLoaded", function () {
             var eventCalllback = function (e) {
                 var el = e.target,
@@ -453,6 +511,12 @@
             for (let elem of phone_inputs) {
                 for (let ev of ['input', 'blur', 'focus']) {
                     elem.addEventListener(ev, eventCalllback);
+                }
+            }
+            var numeric_inputs = document.querySelectorAll('[numeric]');
+            for (let elem of numeric_inputs) {
+                for (let ev of ['input', 'blur', 'focus']) {
+                    elem.addEventListener(ev, e => elem.value = elem.value.replace(/[^\d;]/g, ''));
                 }
             }
         });

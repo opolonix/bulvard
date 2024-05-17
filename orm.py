@@ -48,6 +48,7 @@ class Client(Base):
     name = Column(String, nullable=False)
     phone = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.now)
+    last_update = Column(DateTime, default=datetime.datetime.now)
 
 class Coffee(Base):
     __tablename__ = 'coffee'
