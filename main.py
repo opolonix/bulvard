@@ -213,4 +213,4 @@ async def clietnt(client: int, request: Request, response: Response):
 app.mount("/sources", StaticFiles(directory="sources"), name="sources")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=7741, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=7741)
