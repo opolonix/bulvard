@@ -8,6 +8,12 @@
 </head>
 <body>
     <style>
+        * {
+            font-family: "Inter", sans-serif; 
+        }
+        body{
+            background-color: #F9F5F4;
+        }
         .unfind {
             font-family: "Inter", sans-serif; 
             color: #ffffff; 
@@ -21,10 +27,35 @@
         .unfind::selection{
             color: #ffffff; 
             background-color: #0d3528;
-
         }
     </style>
     <div class="user"></div>
+    <div class="wrapper">
+        <div class="wr-top">
+            <div class="wr-welcome">
+                <h1>Добро пожаловать в Bulevard</h1>
+                <img src="лого.png">
+            </div>
+            <button class="pay-btn">
+                <img src="pay.svg" alt="">
+                <h3>Как оплатить?</h3>
+            </button>
+        </div>
+        <div class="wr-mid">
+            <div class="name">
+                <h1>Дмитрий Колбасов</h1>
+                <h2>ПРИЯТНОГО АППЕТИТА!</h2>
+            </div>
+            <div class="coffee">
+                <h3>До бесплатного кофе еще</h3>
+                <div></div>
+            </div>
+        </div>
+        <div class="wr-down">
+            <img src="card.svg">
+            <h3>Нажмите чтобы открыть вашу карточку</h3>
+        </div>
+    </div>
     <script>
         const getParams = (path = null, params) => {
             str = []
@@ -55,5 +86,88 @@
         }
         main()
     </script>
+    <style>
+        h1{
+            color: #064530;
+            font-size: 26px;
+            font-weight: 900;
+        }
+        h2{
+            color: #809D92;
+            font-size: 21px;
+            font-weight: 900;
+        }
+        h3{
+            color: #064530;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            gap: 15vh;
+        }
+        .wr-top > .wr-welcome {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 22px;
+        }
+        .wr-top > .pay-btn {
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border-radius: 50px;
+
+            background-color: white;
+            border: 1px solid #064530;
+        }
+        .wr-top > .wr-welcome > img{
+            height: 100px;
+        }
+        
+
+        .wr-mid{
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+        .wr-mid > .name{
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            gap: 0;
+        }
+        .name > h1, .name > h2{
+            margin: 0;
+        }
+        .name > h1{
+            font-size: 36px;
+        }
+        .coffee > h3{
+            border-bottom: 1px solid #064530;
+            padding-bottom: 10px;
+        }
+
+        .wr-down{
+            position: absolute;
+            align-self: center;
+            align-items: center;
+            bottom: 0;
+            display: flex;
+            margin: 20px;
+            padding: 20px;
+            gap: 15px;
+            border: 2px solid #89DC80;
+            border-radius: 30px;
+            background-color: white;
+        }
+    </style>
 </body>
 </html>
