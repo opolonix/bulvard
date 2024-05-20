@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <title>Добро пожаловать!</title>
+    <title>bulevard</title>
+
+    
+    <link rel="icon" href="/sources/favicon48.ico">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <meta name="theme-color" content="#0d3528">
+    <link rel="apple-touch-icon" href="/sources/favicon512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <meta name="apple-mobile-web-app-title" content="bulevard">
+
 </head>
 <body>
     <style>
@@ -16,20 +29,29 @@
         }
         .unfind {
             font-family: "Inter", sans-serif; 
-            color: #ffffff; 
-            font-weight: bold; 
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
+            z-index: 1000;
+
+            color: #809D92;
+            font-size: 18px;
+            font-weight: 900;
         }
         .unfind::selection{
-            color: #ffffff; 
             background-color: #0d3528;
         }
+
+        .coffee_count {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            margin-top: 10px;
+            justify-content: center;
+        }
     </style>
-    <div class="user"></div>
     <div class="wrapper">
         <div class="wr-top">
             <div class="wr-welcome">
@@ -48,13 +70,15 @@
             </div>
             <div class="coffee">
                 <h3>До бесплатного кофе еще</h3>
+                <div class="coffee_count"></div>
             </div>
         </div>
-        <div class="wr-down">
+        <div class="wr-down" style="opacity: 0.5;">
             <img src="/sources/card.svg">
             <h3>Нажмите чтобы открыть вашу карточку</h3>
         </div>
     </div>
+    <div class="user"></div>
     <script>
         const getParams = (path = null, params) => {
             str = []
@@ -70,7 +94,9 @@
             ))
             client = await client.json()
             if (client == null) {
-                document.querySelector('.user').innerHTML = '<div class="unfind">Извнините, ничего не найдено!</div>'
+                document.querySelector('.user').innerHTML = '<div class="unfind">ИЗВИНИТЕ, НИЧЕГО НЕ НАЙДЕНО!</div>'
+                document.querySelector('.wrapper').style.display = 'none'
+                
                 document.querySelector('body').style.backgroundColor = "#064530"
                 return
             }
@@ -86,7 +112,26 @@
             console.log(client);
 
             document.querySelector("div.wr-mid > div.name > h1").innerText = client.name
-            document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${7 - client.coffee_count % 7}`
+            real_coffee_count = 7 - (client.coffee_count % 7)
+            for (let i = 1; i <= 7-real_coffee_count; i++){
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-active.svg" alt="">'
+            }
+            for (let i = 7-real_coffee_count; i < 6; i++){
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-inactive.svg" alt="">'
+            }
+            document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-gold.svg" alt="">'
+            if (real_coffee_count != 1) {
+                if (real_coffee_count == 2) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупка!`
+                else if (real_coffee_count == 3) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
+                else if (real_coffee_count == 4) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
+                else if (real_coffee_count == 5) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
+                else  document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупок!`
+            }
+            else {
+                document.querySelector("div.wr-mid > div.coffee > h3").innerHTML = `Следующий кофе бесплатно! 🎉`
+                document.querySelector("div.wr-mid > div.coffee > h3").style.color = `#944E1A`
+                document.querySelector("div.wr-mid > div.coffee > h3").style.fontWeight = `bold`
+            }
         }
         main()
     </script>
