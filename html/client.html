@@ -34,10 +34,10 @@
         <div class="wr-top">
             <div class="wr-welcome">
                 <h1>Добро пожаловать в Bulevard</h1>
-                <img src="лого.png">
+                <img src="/sources/лого.png">
             </div>
             <button class="pay-btn">
-                <img src="pay.svg" alt="">
+                <img src="/sources/pay.svg" alt="">
                 <h3>Как оплатить?</h3>
             </button>
         </div>
@@ -48,11 +48,10 @@
             </div>
             <div class="coffee">
                 <h3>До бесплатного кофе еще</h3>
-                <div></div>
             </div>
         </div>
         <div class="wr-down">
-            <img src="card.svg">
+            <img src="/sources/card.svg">
             <h3>Нажмите чтобы открыть вашу карточку</h3>
         </div>
     </div>
@@ -75,6 +74,7 @@
                 document.querySelector('body').style.backgroundColor = "#064530"
                 return
             }
+
             client = { // информация о клиенте
                 "public_id": client.public_id,
                 "name": client.name,
@@ -82,7 +82,11 @@
                 "created_at": new Date(client.created_at), // время создания записи
                 "coffee_count": client.coffee_count // колво купленного кофе
             }
-            document.querySelector('.user').innerHTML = client
+
+            console.log(client);
+
+            document.querySelector("div.wr-mid > div.name > h1").innerText = client.name
+            document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${7 - client.coffee_count % 7}`
         }
         main()
     </script>
@@ -151,7 +155,7 @@
             font-size: 36px;
         }
         .coffee > h3{
-            border-bottom: 1px solid #064530;
+            border-bottom: 1px solid #0645303b;
             padding-bottom: 10px;
         }
 
