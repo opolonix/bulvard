@@ -119,18 +119,19 @@
             for (let i = 7-real_coffee_count; i < 6; i++){
                 document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-inactive.svg" alt="">'
             }
-            document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-gold.svg" alt="">'
             if (real_coffee_count != 1) {
                 if (real_coffee_count == 2) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупка!`
                 else if (real_coffee_count == 3) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
                 else if (real_coffee_count == 4) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
                 else if (real_coffee_count == 5) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
                 else  document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупок!`
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-gold.svg" alt="">'
             }
             else {
                 document.querySelector("div.wr-mid > div.coffee > h3").innerHTML = `Следующий кофе бесплатно! 🎉`
                 document.querySelector("div.wr-mid > div.coffee > h3").style.color = `#944E1A`
                 document.querySelector("div.wr-mid > div.coffee > h3").style.fontWeight = `bold`
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-gold-big.svg" alt="">'
             }
         }
         main()
