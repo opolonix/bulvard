@@ -186,6 +186,9 @@
             border-radius: 50%;
             cursor: pointer;
         }
+        .scroll-stop {
+            overflow: hidden;
+        }
     </style>
     <header>
         <div class="logo-text">
@@ -285,6 +288,7 @@
             elem = document.querySelector('.edit-client')
             elem.classList.toggle('hidden')
             document.querySelector('.background').classList.toggle('hidden')
+            document.querySelector('body').classList.toggle('scroll-stop')
             
             elem.setAttribute('client-id', client);
             url = window.location.origin + '/' + public_id
@@ -294,6 +298,8 @@
         }
         const show_new_coffee_popup = (ind) => {
             
+            document.querySelector('body').classList.toggle('scroll-stop')
+
             document.querySelector('.new-coffee').classList.toggle('hidden')
             document.querySelector('.background').classList.toggle('hidden')
             document.querySelector('.new-coffee').setAttribute('client-id', ind);
@@ -349,7 +355,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            position: absolute;
+            position: fixed;
             display: flex;
             flex-direction: column;
             width: fit-content;
@@ -405,7 +411,7 @@
             background-color: #8C8C8C;
         }
         .background {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -448,7 +454,7 @@
         <input class="name" type="text" placeholder="Валентин Иванов" style="border: none;">
         <input class="phone" type="text" placeholder="+7(978)091-53-41" data-phone-pattern style="border: none;">
         <div class="buttons">
-            <input type="button" value="Удалить." class="drop-client">
+            <input type="button" value="Удалить" class="drop-client">
             <input type="submit" value="Применить">
         </div>
     </form>
@@ -550,6 +556,8 @@
             document.querySelector('.background').classList.add('hidden')
             document.querySelector('.edit-client').classList.add('hidden')
             document.querySelector('.new-coffee').classList.add('hidden')
+            
+            document.querySelector('body').classList.remove('scroll-stop')
             
         })
 
