@@ -252,7 +252,7 @@
             return path == null ? str : path + '?' + str
         }
         const main = async () => {
-            limit = 20
+            limit = 100
             r = await fetch((getParams('/clients', {
                 limit: limit, offset: offset
             })))
@@ -265,24 +265,25 @@
         }
         main()
 
-        window.addEventListener("scroll", async (e) => {
-            if (full_loading) return
-            const contentHeight = document.documentElement.scrollHeight;
-            const visibleHeight = window.innerHeight;
-            const scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+        // document.querySelector('body').addEventListener("scroll", async (e) => {
+        //     if (full_loading) return
+        //     const contentHeight = document.documentElement.scrollHeight;
+        //     const visibleHeight = window.innerHeight;
+        //     const scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+        //     console.log(contentHeight - visibleHeight - scrollPosition);
+        //     if (contentHeight - visibleHeight - scrollPosition <= 100) {
+        //         console.log("scropll", offset);
+        //         limit = 20
+        //         r = await fetch((getParams('/clients', {
+        //             limit: limit, offset: offset
+        //         })))
+        //         clients = await r.json()
+        //         offset += clients.length
 
-            if (contentHeight - visibleHeight - scrollPosition <= 100) {
-                limit = 20
-                r = await fetch((getParams('/clients', {
-                    limit: limit, offset: offset
-                })))
-                clients = await r.json()
-                offset += clients.length
-
-                if (clients.length != limit) full_loading = true
-                add_clients(clients)
-            }
-        });
+        //         if (clients.length != limit) full_loading = true
+        //         add_clients(clients)
+        //     }
+        // });
 
         const show_edit_client_popup = (public_id, client, name, phone, coffee_count) => {
             elem = document.querySelector('.edit-client')
