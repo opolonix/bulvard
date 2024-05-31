@@ -384,7 +384,7 @@
         form input[type="text"]{
             font-size: 16px;
         }
-        form input[type="submit"] {
+        form input[type="submit"], form input[type="button"] {
             border: none;
             width: fit-content;
             font-size: 16px;
@@ -396,6 +396,10 @@
             margin: 6px auto 0;
             border-radius: 20px;
             align-self: stretch;
+        }
+        form input[type="button"] {
+            background-color: #d93f3f;
+            color: white;
         }
         form .buttons .reject{
             background-color: #8C8C8C;
@@ -443,7 +447,10 @@
         <canvas class="client-qr"></canvas>
         <input class="name" type="text" placeholder="Валентин Иванов" style="border: none;">
         <input class="phone" type="text" placeholder="+7(978)091-53-41" data-phone-pattern style="border: none;">
-        <input type="submit" value="Применить изменения">
+        <div class="buttons">
+            <input type="button" value="Удалить." class="drop-client">
+            <input type="submit" value="Применить">
+        </div>
     </form>
 
     <form action="#" class="new-coffee hidden">
@@ -544,6 +551,15 @@
             document.querySelector('.edit-client').classList.add('hidden')
             document.querySelector('.new-coffee').classList.add('hidden')
             
+        })
+
+        document.querySelector('.drop-client').addEventListener('click', async e => {
+            cl = document.querySelector('.edit-client')
+            let r = confirm('Клиент удалится безвозвратно! Сделать это?');
+            if (r) {
+                await fetch(getParams('/drop-client', {client: cl.getAttribute('client-id')}))
+                location.reload()
+            }
         })
     </script>
 </body>

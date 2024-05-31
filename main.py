@@ -135,6 +135,17 @@ async def clietnt(client: int, request: Request, response: Response) -> ClientSc
         last_update=client_db[0].last_update, 
         coffee_count=client_db[1] if client_db[1] else 0)
 
+@app.get('/drop-client')
+async def clietnt(client: int, request: Request, response: Response) -> bool:
+
+    session.query(Coffee).filter(Coffee.client_id == client).delete()
+    session.commit()
+    
+    session.query(Client).filter(Client.id == client).delete()
+    session.commit()
+
+    return True
+
 
 @app.get('/new-coffee')
 async def clietnts_list(client: int, count, comment: str, request: Request, response: Response) -> dict:
