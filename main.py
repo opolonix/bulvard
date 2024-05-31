@@ -138,9 +138,16 @@ async def clietnt(client: int, request: Request, response: Response) -> ClientSc
 @app.get('/drop-client')
 async def clietnt(client: int, request: Request, response: Response) -> bool:
 
+    token = request.cookies.get('auth-token')
+    moder = session.query(Session).filter(Session.token == token).first()
+    
+    if not moder: 
+        response.delete_cookie('auth-token')
+        return RedirectResponse("/singin")
+    
     session.query(Coffee).filter(Coffee.client_id == client).delete()
     session.commit()
-    
+
     session.query(Client).filter(Client.id == client).delete()
     session.commit()
 
