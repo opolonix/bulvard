@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>bulevard</title>
+
+    
+    <link rel="icon" href="/sources/favicon48.ico">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <meta name="theme-color" content="#0d3528">
+    <link rel="apple-touch-icon" href="/sources/favicon512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <meta name="apple-mobile-web-app-title" content="bulevard">
+
+</head>
+<body>
+    <style>
+        * {
+            font-family: "Inter", sans-serif; 
+        }
+        body{
+            background-color: #F9F5F4;
+        }
+        .unfind {
+            font-family: "Inter", sans-serif; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            z-index: 1000;
+
+            color: #809D92;
+            font-size: 18px;
+            font-weight: 900;
+        }
+        .unfind::selection{
+            background-color: #0d3528;
+        }
+
+        .coffee_count {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+    </style>
+    <style>
+        h1{
+            color: #064530;
+            font-size: 26px;
+            font-weight: 900;
+        }
+        h2{
+            color: #809D92;
+            font-size: 21px;
+            font-weight: 900;
+        }
+        h3{
+            color: #064530;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            gap: 12vh;
+        }
+        .wr-top > .wr-welcome {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 22px;
+        }
+        .wr-top > .pay-btn {
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border-radius: 50px;
+
+            background-color: white;
+            border: 1px solid #064530;
+        }
+        .wr-top > .wr-welcome > img{
+            height: 100px;
+        }
+        
+
+        .wr-mid{
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+        .wr-mid > .name{
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            gap: 0;
+        }
+        .name > h1, .name > h2{
+            margin: 0;
+        }
+        .name > h1{
+            font-size: 36px;
+        }
+        .coffee > h3{
+            border-bottom: 1px solid #0645303b;
+            padding-bottom: 10px;
+        }
+
+        .wr-down{
+            position: absolute;
+            align-self: center;
+            align-items: center;
+            bottom: 0;
+            display: flex;
+            margin: 20px;
+            padding: 10px 20px 10px 10px;
+            gap: 15px;
+            border-radius: 30px;
+            background-color: #064530;
+        }
+        .wr-down h3 {
+            color: #fff;
+        }
+    </style>
+    <div class="wrapper">
+        <div class="wr-top">
+            <div class="wr-welcome">
+                <h1>Добро пожаловать в Bulevard</h1>
+                <img src="/sources/лого.png">
+            </div>
+            <button class="pay-btn">
+                <img src="/sources/pay.svg" alt="">
+                <h3>Как оплатить?</h3>
+            </button>
+        </div>
+        <div class="wr-mid">
+            <div class="name">
+                <h1>Дмитрий Колбасов</h1>
+                <h2>ПРИЯТНОГО АППЕТИТА!</h2>
+            </div>
+            <div class="coffee">
+                <h3>До бесплатного кофе еще</h3>
+                <div class="coffee_count"></div>
+            </div>
+        </div>
+        <div class="wr-down" style="opacity: 1;">
+            <img src="/sources/card.svg">
+            <h3>Нажмите чтобы открыть вашу карточку</h3>
+        </div>
+        <div class="wr-place hidden">
+            <style>
+                .wr-place.hidden {
+                    display: none;
+                }
+                .wr-place{
+                    position: absolute;
+                    z-index: -1;
+
+                    width: 100svw;
+                    height: 28vh;
+                    bottom: 0;
+                    left: 0;
+                    overflow: hidden;
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    padding-bottom: 10vh;
+
+                    background-image: linear-gradient(to top, #ff8a00, #ff9183, #ffb4d4, #ffdefe, #ffffff00);
+
+                }
+                .wr-place img:nth-child(2){
+                    position: absolute;
+                    left: -20px;
+                    top: -5px;
+                }
+                .wr-place img:nth-child(3){
+                    position: absolute;
+                    right: -10px;
+                }
+
+                @media only screen and (max-height: 780px) {
+                    .wr-place img:nth-child(2){
+                        left: -30px;
+                        top: -10px;
+                    }
+                    .wrapper {
+                        gap: 5vh;
+                    }
+                }
+
+                @media only screen and (min-height: 780px) and (max-height: 900px) {
+                    .wr-place {
+                        height: 35vh;
+                    }
+                    .wr-place img:nth-child(2){
+                        top: 50px;
+                    }
+                    .wr-place img{
+                        scale: 1.2;
+                        top: 50px;
+                    }
+                    .wrapper {
+                        gap: 15vh;
+                    }
+                }
+
+                @media only screen and (min-height: 900px) {
+                    
+                    .wr-place img{
+                        scale: 1.3;
+                    }
+                    .wr-place img:nth-child(2){
+                        top: 30px;
+                        left: 0;
+                    }
+                    .wr-place img:nth-child(3){
+                        top: 40px;
+                        right: 0;
+                    }
+                    .wrapper {
+                        gap: 15vh;
+                    }
+                }
+
+            </style>
+            <img src="/sources/party-popper.svg" alt="">
+            <img src="/sources/party-popper-right.svg" alt="">
+        </div>
+    </div>
+    <div class="user"></div>
+    <script>
+        const getParams = (path = null, params) => {
+            str = []
+            for (const param in params) {
+                str.push(`${encodeURIComponent(param)}=${encodeURIComponent(params[param])}`) 
+            }
+            str = str.join('&')
+            return path == null ? str : path + '?' + str
+        }
+        const main = async () => {
+            client = await fetch(getParams("/get-client", 
+                {client: window.location.pathname.replace(/[^\d;]/g, '')}
+            ))
+            client = await client.json()
+            if (client == null) {
+                document.querySelector('.user').innerHTML = '<div class="unfind">ИЗВИНИТЕ, НИЧЕГО НЕ НАЙДЕНО!</div>'
+                document.querySelector('.wrapper').style.display = 'none'
+                
+                document.querySelector('body').style.backgroundColor = "#064530"
+                return
+            }
+
+            client = { // информация о клиенте
+                "public_id": client.public_id,
+                "name": client.name,
+                "phone": client.phone, // здесь от номера только цифры
+                "created_at": new Date(client.created_at), // время создания записи
+                "coffee_count": client.coffee_count // колво купленного кофе
+            }
+
+            document.querySelector("div.wr-mid > div.name > h1").innerText = client.name
+            real_coffee_count = 7 - (client.coffee_count % 7)
+            for (let i = 1; i <= 7-real_coffee_count; i++){
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-active.svg" alt="">'
+            }
+            for (let i = 7-real_coffee_count; i < 6; i++){
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-inactive.svg" alt="">'
+            }
+            if (real_coffee_count != 1) {
+                if (real_coffee_count == 2) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупка!`
+                else if (real_coffee_count == 3) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
+                else if (real_coffee_count == 4) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
+                else if (real_coffee_count == 5) document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупки!`
+                else  document.querySelector("div.wr-mid > div.coffee > h3").innerHTML += ` ${real_coffee_count - 1} покупок!`
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-gold.svg" alt="">'
+            }
+            else {
+                document.querySelector("div.wr-mid > div.coffee > h3").innerHTML = `Следующий кофе бесплатно! 🎉`
+                document.querySelector("div.wr-mid > div.coffee > h3").style.color = `#944E1A`
+                document.querySelector("div.wr-mid > div.coffee > h3").style.fontWeight = `bold`
+                document.querySelector('.coffee_count').innerHTML += '<img src="/sources/cup-gold-big.svg" alt="">'
+                document.querySelector('.wr-place').classList.remove("hidden")
+            }
+        }
+        main()
+    </script>
+</body>
+</html>
