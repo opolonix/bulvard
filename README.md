@@ -1,7 +1,10 @@
 python version 3.7+
-default:
-    login    admin
-    password admin
+
+default<br />
+    \ login - admin<br />
+    \ password - admin<br />
+
+admin panel - /admin
 
 ```console
 git clone https://github.com/opolonix/bulvard
@@ -14,7 +17,7 @@ python -m venv venv
 nginx config:
 ```
 server {
-    listen  :80;
+    listen  80;
 
     server_name bulvard.local www.bulvard.local;
 
