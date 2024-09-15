@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/default.css">
+    <title>Бульвар кофе</title>
+</head>
+<body>
+    <style>
+        .params {
+            width: fit-content;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .item {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item input.numeric, .item input[type="text"] {
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            width: 30px;
+            outline: none;
+            text-align: center;
+        }
+        .item input[type="text"] {
+            width: 150px;
+        }
+    
+    </style>
+    <div class="wrapper">
+        <header>
+            <div class="logo"></div>
+            <div class="deskr">Bulevard Coffee</div>
+        </header>
+        <nav>
+            <a href="/admin">Назад</a>
+        </nav>
+        <div class="params">
+            {% for key, value in fields.items()%}
+                <div class="item">
+                    <div class="name">{{value.name}}</div>
+                    {% if value.type == "int"%}
+                        <input key="{{key}}" class="numeric" value="{{value.value}}" t="{{value.type}}">
+                    {%elif value.type == "checkbox"%}
+                        <input key="{{key}}" {% if value.value == 1 %}checked{%endif%} type="checkbox" value="{{value.value}}">
+                    {%elif value.type.startswith('radio')%}
+                        <input key="{{key}}" type="radio" name="{{value.type}}" {% if value.value == 1 %}checked{%endif%}>
+                    {%elif value.type == 'text'%}
+                        <input key="{{key}}" type="text" name="{{value.type}}" autocomplete="off" value="{{value.value}}">
+                    {%endif%}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll("input.numeric").forEach(el => el.addEventListener("input", e => {el.value = el.value.replace(/[^\d]/gi, '')}))
+        document.querySelectorAll("input").forEach(el => el.addEventListener("input", async e => {  
+            if (el.type == "checkbox"){
+                url = `/config?key=${encodeURI(el.attributes.key.value)}&value=${el.checked ? 1 : 0}`
+                await fetch(url);
+            }
+            else if (el.type == "radio") {
+                document.querySelectorAll(`input[name="${el.name}"]`).forEach(async e => {
+                    url = `/config?key=${e.attributes.key.value}&value=${e.checked ? 1 : 0}`
+                    await fetch(url);
+                })
+            }
+            else if (el.type == "text"){
+                url = `/config?key=${el.attributes.key.value}&value=${encodeURI(el.value)}`
+                await fetch(url);
+            }
+            else if (el.attributes.t.value == "int"){
+                url = `/config?key=${el.attributes.key.value}&value=${el.value == '' | el.value == '0'? 1 : el.value}`
+                await fetch(url);
+            }
+        }))
+    </script>
+</body>
+</html>

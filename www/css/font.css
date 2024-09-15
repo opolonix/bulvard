@@ -1,0 +1,90 @@
+/* Cascadia Code Bold */
+@font-face {
+    font-family: 'CascadiaCode';
+    src: url('../font/CascadiaCode-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Cascadia Code ExtraLight */
+@font-face {
+    font-family: 'CascadiaCode';
+    src: url('../font/CascadiaCode-ExtraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+/* Cascadia Code Light */
+@font-face {
+    font-family: 'CascadiaCode';
+    src: url('../font/CascadiaCode-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* Cascadia Code Italic */
+@font-face {
+    font-family: 'CascadiaCode';
+    src: url('../font/CascadiaCodeItalic-Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Cascadia Code Light Italic */
+@font-face {
+    font-family: 'CascadiaCode';
+    src: url('../font/CascadiaCodeItalic-LightItalic.otf') format('opentype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Cascadia Code SemiBold Italic */
+@font-face {
+    font-family: 'CascadiaCode';
+    src: url('../font/CascadiaCodeItalic-SemiBoldItalic.otf') format('opentype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Cascadia Code PL Regular */
+@font-face {
+    font-family: 'CascadiaCodePL';
+    src: url('../font/CascadiaCodePL-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Cascadia Code PL Bold */
+@font-face {
+    font-family: 'CascadiaCodePL';
+    src: url('../font/CascadiaCodePL-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Cascadia Code PL Light */
+@font-face {
+    font-family: 'CascadiaCodePL';
+    src: url('../font/CascadiaCodePL-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* Cascadia Code PL Italic */
+@font-face {
+    font-family: 'CascadiaCodePL';
+    src: url('../font/CascadiaCodePLItalic-Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Cascadia Code PL Bold Italic */
+@font-face {
+    font-family: 'CascadiaCodePL';
+    src: url('../font/CascadiaCodePLItalic-BoldItalic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* Добавьте остальные шрифты аналогично */
+

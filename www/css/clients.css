@@ -1,0 +1,107 @@
+
+.popup {
+    width: 70vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 30px;
+    display: none;
+    z-index: 2;
+    flex-direction: column;
+    gap: 10px;
+}
+.popup div {
+    width: 100%;
+
+}
+.popup .name {
+    font-size: 24px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+}
+.popup .phone a {
+    color: #000;
+    text-decoration: none;
+}
+.popup .delete {
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 8px;
+    width: fit-content;
+    margin-top: 20px;
+}
+.popup .save-order {
+    border: none;
+    border-radius: 8px;
+    padding: 5px 15px;
+}
+.popup .coffee_increment {
+    width: 30px; 
+    border: none;
+    border-radius: 8px;
+    padding: 5px 15px; 
+    text-align: center;
+}
+.popup .order {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.popup .add_coffee_increment {
+    border-radius: 50%;
+    border: none;
+    width: 25px;
+    transform: translateX(-15px);
+}
+
+.cover {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100svw;
+    height: 100svh;
+    backdrop-filter: blur(5px);
+    background-color: #00000021;
+}
+
+.client {
+    display: flex;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.client.bonus {
+    background-color: gold;
+}
+.clients {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
+@media (max-width: 450px) {
+    .clients {
+        flex-direction: column;
+        width: fit-content;
+    }
+    .client {
+        width: 100%;
+    }
+
+}

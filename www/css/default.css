@@ -1,0 +1,42 @@
+* {
+    font-family: 'CascadiaCode', sans-serif;
+}
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper header {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 0;
+}
+.wrapper {
+    min-height: 100svh;
+    background-color: #ffeded;
+}
+.wrapper .deskr {
+    font-family: 'CascadiaCode';
+    font-size: 32px;
+    font-weight: bold;
+    font-style: italic;
+    user-select: none;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 20px;
+}
+nav div, nav a {
+    text-decoration: none;
+    color: #000;
+    padding: 10px 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+    justify-content: space-between;
+}

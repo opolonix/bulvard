@@ -1,31 +1,30 @@
-from sqlalchemy import create_engine, Column, Boolean, String, Integer, DateTime, BigInteger, ForeignKey, Text
-from sqlalchemy.orm import DeclarativeBase, Session, relationship
+from sqlalchemy import Column, String, Integer, DateTime, Boolean, ForeignKey
+from sqlalchemy.orm import DeclarativeBase, Session
 
 
-import random, string, hashlib, datetime
-
-from typing import List
+import random, datetime
 import sqlalchemy, os
 
 def sclite_engine(path: str, autocommit: bool = True) -> sqlalchemy.engine.base.Engine:
     path = path.strip('\\').strip('/')
-
+    is_new = False
     if not os.path.exists(path): 
         open(path, 'w+').close()
+        is_new = True
 
     eng = sqlalchemy.create_engine(
         f"sqlite:///{path}",
         isolation_level = "AUTOCOMMIT" if autocommit else None
     )
-    return eng
+    return eng, is_new
 
 def generate_id() -> str:
     while True:
-        secret = random.randint(9999, 999999)
+        secret = random.randint(999, 99999)
         if not session.query(Client).filter(Client.public_id == secret).first():
             return secret
 
-engine = sclite_engine("db.db")
+engine, is_new = sclite_engine("db.db")
 session = Session(bind=engine)
 
 class Base(DeclarativeBase):
@@ -49,6 +48,7 @@ class Client(Base):
     phone = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.now)
     last_update = Column(DateTime, default=datetime.datetime.now)
+    hidden = Column(Boolean, default=False)
 
 class Coffee(Base):
     __tablename__ = 'coffee'
@@ -67,9 +67,23 @@ class Session(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    token = Column(String, unique=True, index=True, nullable=False)
+    token = Column(String, unique=True, index=True)
     moderator = Column(Integer, ForeignKey('moderators.id'))
 
     init = Column(DateTime, default=datetime.datetime.now)
 
+class Conf(Base):
+    __tablename__ = 'config'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    key = Column(String, unique=True)
+    value = Column(String)
+
+    date = Column(DateTime, default=datetime.datetime.now)
+
 Base.metadata.create_all(bind=engine)
+if is_new:
+    session.add(Conf(key="login", value="admin"))
+    session.add(Conf(key="password", value="admin"))
+    session.commit()

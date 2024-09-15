@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/clients.css">
+    <title>Бульвар кофе</title>
+</head>
+<body></body>
+    <div class="wrapper">
+        <header>
+            <div class="logo"></div>
+            <div class="deskr">Bulevard Coffee</div>
+        </header>
+        <nav>
+            <a href="/search">Поиск</a>
+            <a href="/settings">Настройки</a>
+        </nav>
+        <div class="popup">
+            <textarea class="name"  placeholder="Имя"></textarea>
+            <div class="phone"></div>
+            <div class="uuid"></div>
+            <div class="coffee_count"></div>
+            <div>Новый заказ</div>
+            <div class="order">
+                <input type="text" class="coffee_increment numeric" value="1">
+                <button class="add_coffee_increment" onclick="console.dir(coffee_increment.value = parseInt(coffee_increment.value) + 1)">+</button>
+                <button class="save-order">Сохранить</button>
+            </div>
+            <button class="delete">Удалить</button>
+        </div>
+        <div class="cover"></div>
+        <div class="clients">
+            {% for client in clients %}
+                <div class="client{% if client.coffee_count % coffee_limit == coffee_limit-1 %} bonus{% endif %}"
+                    uuid="{{client.public_id}}"
+                    name="{{client.name}}"
+                    phone="{{client.phone}}"
+                    created_at="{{client.created_at}}"
+                    last_update="{{client.last_update}}"
+                    coffee_count="{{client.coffee_count}}"
+                    visits="{{client.visits}}"
+                    first_visit="{{client.first_visit}}"
+                    spent="{{client.spent}}"
+                    >
+                    <div class="name">{{ client.name }}</div>
+                    <div class="coffees">{% if client.coffee_count != 0 %}{{ client.coffee_count % coffee_limit }}{% else %}0{% endif %}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        const coffee_limit = {{coffee_limit}}
+    </script>
+    <script src="js/format.js"></script>
+    <script src="js/popup.js"></script>
+</body>
+</html>
