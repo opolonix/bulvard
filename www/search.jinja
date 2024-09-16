@@ -111,7 +111,7 @@
                             spent="{{client.spent}}"
                             >
                             <div class="name">{{ client.name }}</div>
-                            <div class="coffees">{% if client.coffee_count != 0 %}{{ client.coffee_count % coffee_limit + 1 }}{% else %}0{% endif %}</div>
+                            <div class="coffees">{% if client.coffee_count != 0 %}{{ client.coffee_count % coffee_limit }}{% else %}0{% endif %}</div>
                         </div>
                     {% endfor %}
                 </div>
