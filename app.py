@@ -50,7 +50,7 @@ async def index():
     config = session.query(Conf).all()
     config: dict[str, str] = {c.key: c.value for c in config}
 
-    coffee_limit = int(config.get("coffee_limit", 6))
+    coffee_limit = int(c if (c := config.get("coffee_limit", 6)) != '' else 6)
 
     if int(config.get("sort_by_name", True)):
         clients.sort(key=lambda client: client['name'])
@@ -126,7 +126,7 @@ async def search(input: str = ""):
     config = session.query(Conf).all()
     config: dict[str, str] = {c.key: c.value for c in config}
 
-    coffee_limit = int(config.get("coffee_limit", 6))
+    coffee_limit = int(c if (c := config.get("coffee_limit", 6)) != '' else 6)
     if input != "":
         if int(config.get("sort_by_name", True)):
             clients.sort(key=lambda client: client['name'])
@@ -167,7 +167,7 @@ async def settings():
 
 
     fields = {
-        "coffee_limit": {"name": "Лимит кофе", "value": config.get("coffee_limit", 6), "type": "int"},
+        "coffee_limit": {"name": "Лимит кофе", "value": c if (c := config.get("coffee_limit", 6)) != '' else 6, "type": "int"},
         "sort_by_name": {"name": "Сортировать по имени", "value": int(config.get("sort_by_name", 1)), "type": "radio:sort"},
         "sort_by_date": {"name": "Сначала недвание", "value": int(config.get("sort_by_date", 0)), "type": "radio:sort"},
         "pin_bonus_coffee": {"name": "Закрепить бонус кофе", "value": int(config.get("pin_bonus_coffee", 1)), "type": "checkbox"},
