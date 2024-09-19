@@ -30,6 +30,7 @@ def get_clients():
     clients = []
     for client in raw_clients:
         data = {c.name: getattr(client[0], c.name) for c in client[0].__table__.columns}
+        data["name"] = data["name"].title()
         if data['hidden']: continue
         if not client[1]:
             data.update({["coffee_count", "visits", "last_visit", "first_visit", "spent"][i]: c for i, c in enumerate([0, 0, data["last_update"], data["last_update"], 0])})
