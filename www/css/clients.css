@@ -88,15 +88,15 @@
 }
 
 .client .coffees {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 13px;
+    border-radius: 12px;
     font-size: 22px;
     color: #000;
-    border: 1px solid #e4e4e4;
+    border: 2px solid #e0e0e0;
     font-weight: 600;
 }
 .client.bonus .coffees {

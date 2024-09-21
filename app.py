@@ -73,7 +73,6 @@ async def index(input: str = None):
             clients = list(filter(lambda x: x['name'] == '' or x['phone'] == '', clients))
 
     t = Template(content)
-    print(len(clients))
     return HTMLResponse(t.render(clients=clients, coffee_limit=coffee_limit, input="" if input is None else input))
 
 @app.get("/settings", response_class=HTMLResponse)

@@ -25,7 +25,7 @@ nav {
     flex-direction: row;
     gap: 8px;
     justify-content: center;
-    padding: 10px 0;
+    padding: 12px;
     background-color: #000;
 }
 nav div, nav a {
@@ -34,7 +34,7 @@ nav div, nav a {
     background-color: #fff;
 
     height: 38px;
-    width: 38px;
+    min-width: 38px;
     border-radius: 12px;
 
     cursor: pointer;
@@ -43,12 +43,14 @@ nav div, nav a {
     align-items: center;
 }
 nav input {
+    font-family: "Inter", sans-serif;
+    appearance: none;
     height: 38px;
+    width: 100%;
     border: none;
     border-radius: 12px;
     outline: none;
-    width: 250px;
     box-sizing: border-box;
     font-size: 14px;
-    padding: 11px 40px 11px 14px;
+    padding: 11px 40px 11px 16px;
 }
