@@ -16,24 +16,41 @@
     <link rel="apple-touch-icon" href="/src/favicon512.png">
 
     <meta name="theme-color" content="#0d3528">
+    <meta name="mobile-web-app-capable" content="yes">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="bulevard owner">
 
 
 </head>
-<body></body>
+<body>
+    <style>
+        .search-btn {
+            position: absolute;
+            right: 0;
+            z-index: 2;
+            width: 32px; height:32px;
+        }
+    </style>
     <div class="wrapper">
-        <header>
-            <div class="logo"></div>
-            <div class="deskr">Bulevard Coffee</div>
-        </header>
         <nav>
-            <a href="/search">Поиск</a>
-            <a href="/settings">Настройки</a>
+            <a href="/settings">
+                <img src="src/settings.svg">
+            </a>
+            <div style="position: relative;width:fit-content;">
+                <div  class="search-btn" onclick="window.location.href=`/admin?input=${encodeURI(document.querySelector('.input').value)}`"><img src="src/search.svg"></div>
+                <input type="text" autofocus class="input" placeholder="Поиск">
+            </div>
         </nav>
+        {% if input != "" %}
+            <div class="hint" onclick="document.querySelector('.input').value = '{{input}}'">Поиск по:  <u>{{input}}</u></div>
+        {% endif %}
+        <div class="new-client">
+            <img src="src/plus.svg">
+        </div>
         <div class="popup">
-            <textarea class="name"  placeholder="Имя"></textarea>
+            <textarea class="name" placeholder="Имя"></textarea>
             <div class="phone"></div>
             <div class="uuid"></div>
             <div class="coffee_count"></div>
@@ -59,16 +76,78 @@
                     first_visit="{{client.first_visit}}"
                     spent="{{client.spent}}"
                     >
-                    <div class="name">{{ client.name }}</div>
+                    <div style="display: flex; align-items: flex-start; flex-direction: column; justify-content: center; gap: 2px;">
+                        <div class="name">{{ client.name }}</div>
+                        <div class="phone">{{ client.phone }}</div>
+                    </div>
                     <div class="coffees">{% if client.coffee_count != 0 %}{{ client.coffee_count % coffee_limit }}{% else %}0{% endif %}</div>
                 </div>
+                <svg class="splitter" xmlns="http://www.w3.org/2000/svg" width="308" height="2" viewBox="0 0 308 2" fill="none">
+                  <path d="M1 1H307" stroke="black" stroke-opacity="0.18" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 8"/>
+                </svg>
             {% endfor %}
         </div>
     </div>
+    <script src="js/format.js"></script>
     <script>
         const coffee_limit = {{coffee_limit}}
+        document.querySelectorAll('.phone').forEach(e => {
+            if (e.innerText == "") e.innerText = "-"
+            else e.innerText = format(e.innerText)
+        })
+        document.querySelector(".input").addEventListener("keypress", e => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                window.location.href= `/admin?input=${encodeURI(document.querySelector('.input').value)}`
+            }
+        });
+
+
+        const url = new URL(window.location);
+        url.search = "";
+        window.history.replaceState({}, document.title, url);
     </script>
-    <script src="js/format.js"></script>
     <script src="js/popup.js"></script>
+    <script>
+    
+        document.querySelector(".new-client").addEventListener("click", e => {
+            
+            popup.style.display = "flex"
+            cover.style.display = "block"
+            coffee_increment.value = 1
+            document.body.style.overflow = "hidden"
+            popup.querySelector(".delete").style.display = "none"
+            popup.querySelector(".uuid").innerText = ""
+            popup.querySelector(".coffee_count").innerText = ""
+            popup.querySelector(".phone").innerHTML = '<div style="display:flex; align-items: center;">Телефон: <input placeholder="+71234567890" style="margin: 0 0 0 10px; border:none; width:100%; box-sizing:border-box; border-radius: 10px;padding: 5px 15px;"></div>'
+            {% if not input.startswith("+") and not variable is number %}
+                popup.querySelector(".name").value = '{{input}}'
+            {% else %}
+                popup.querySelector(".phone").innerText = '<div style="display:flex; align-items: center;">Телефон: <input placeholder="+71234567890" style="margin: 0 0 0 10px; border:none;  width:100%; box-sizing:border-box; border-radius: 10px;padding: 5px 15px;" value="{{input}}"></div>'
+            {% endif %}
+
+            popup.querySelector(".save-order").onclick = async (el) => {
+                popup.querySelector(".name").style.outline = ""
+                popup.querySelector(".phone input").style.outline = ""
+
+                if (popup.querySelector(".name").value == "") {
+                    popup.querySelector(".name").style.outline = "2px solid #ffc5c5"
+                    return
+                }
+
+                if (popup.querySelector(".phone input").value == "") { 
+                    popup.querySelector(".phone input").style.outline = "2px solid #ffc5c5"
+                    return
+                }
+
+
+                let i = parseInt(coffee_increment.value)
+                answer = await fetch(`/newClient?name=${encodeURI(popup.querySelector(".name").value)}&phone=${encodeURI(popup.querySelector(".phone input").value)}`)
+                uuid = (await answer.text())
+                await fetch(`/newOrder?id=${uuid}&count=${coffee_increment.value}`)
+                window.location.href = `/admin?input=${encodeURI(popup.querySelector(".name").value)}`
+            }
+        })
+    </script>
 </body>
 </html>

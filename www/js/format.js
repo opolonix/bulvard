@@ -1,5 +1,5 @@
 const format = (string) => {
-    matrix = "+7(___) ___-__-__";
+    matrix = "+7(___)___-__-__";
     i = 0;
     def = matrix.replace(/\D/g, ""),
     val = string.replace(/\D/g, "");

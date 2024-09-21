@@ -31,12 +31,15 @@
             justify-content: space-between;
             align-items: center;
         }
+        .item .name {
+            font-weight: bold;
+        }
 
         .item input.numeric, .item input[type="text"] {
-            border: none;
-            border-radius: 5px;
+            border: 2px solid #e4e4e4;
+            border-radius: 12px;
             padding: 5px 10px;
-            width: 30px;
+            width: 50px;
             outline: none;
             text-align: center;
         }
@@ -46,12 +49,11 @@
     
     </style>
     <div class="wrapper">
-        <header>
-            <div class="logo"></div>
-            <div class="deskr">Bulevard Coffee</div>
-        </header>
         <nav>
-            <a href="/admin">Назад</a>
+            <a href="/admin">
+                <img src="src/left-arrow.svg">
+            </a>
+            <div style="width:200px;align-text:center;color:#8b8b8b;font-weight:bold;font-size:12px;">Настройки</div>
         </nav>
         <div class="params">
             {% for key, value in fields.items()%}
