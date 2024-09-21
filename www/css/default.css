@@ -23,7 +23,7 @@ html, body {
 nav {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 8px;
     justify-content: center;
     padding: 10px 0;
     background-color: #000;
