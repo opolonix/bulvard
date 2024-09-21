@@ -30,7 +30,7 @@ nav {
     flex-direction: row;
     gap: 5px;
     justify-content: center;
-    padding: 30px 0 10px;
+    padding: 10px 0;
     background-color: #000;
 }
 nav div, nav a {

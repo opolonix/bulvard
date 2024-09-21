@@ -97,6 +97,7 @@
     font-size: 22px;
     color: #000;
     border: 1px solid #e4e4e4;
+    font-weight: 600;
 }
 .client.bonus .coffees {
     color: #ffffff;
@@ -107,6 +108,7 @@
 }
 .client .name {
     font-weight: bold;
+    font-size: 18px;
 }
 .client .phone {
     color: #8C8C8C;
