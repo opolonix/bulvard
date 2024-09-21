@@ -19,7 +19,7 @@ nginx config:
 server {
     listen  80;
 
-    server_name bulvard.local www.bulvard.local;
+    server_name coffee.com www.coffee.com;
 
     location / {
         proxy_pass http://localhost:8700;
