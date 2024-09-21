@@ -56,7 +56,7 @@ async def index(input: str = None):
     if int(config.get("sort_by_name", True)):
         clients.sort(key=lambda client: client['name'])
     if int(config.get("sort_by_date", False)):
-        clients.sort(key=lambda client: client['last_visit'])
+        clients.sort(key=lambda client: -client['last_visit'].timestamp())
     if int(config.get("pin_bonus_coffee", True)):
         clients.sort(key=lambda client: client['coffee_count'] % coffee_limit != coffee_limit - 1)
     if input is not None:
