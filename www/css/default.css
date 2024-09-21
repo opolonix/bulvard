@@ -2,7 +2,9 @@
 
 * {
     font-family: "Inter", sans-serif;
+    appearance: none;
 }
+
 html, body {
     padding: 0;
     margin: 0;
