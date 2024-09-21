@@ -19,13 +19,6 @@ html, body {
     min-height: 100svh;
     background-color: #ffffff;
 }
-.wrapper .deskr {
-    font-family: 'CascadiaCode';
-    font-size: 32px;
-    font-weight: bold;
-    font-style: italic;
-    user-select: none;
-}
 
 nav {
     display: flex;
@@ -40,9 +33,9 @@ nav div, nav a {
     color: #000;
     background-color: #fff;
 
-    height: 32px;
-    width: 32px;
-    border-radius: 10px;
+    height: 38px;
+    width: 38px;
+    border-radius: 12px;
 
     cursor: pointer;
     display: flex;
@@ -50,9 +43,9 @@ nav div, nav a {
     align-items: center;
 }
 nav input {
-    height: 32px;
+    height: 38px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     outline: none;
     width: 250px;
     box-sizing: border-box;
