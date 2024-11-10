@@ -1,8 +1,8 @@
 python version 3.7+
 
 default<br />
-    \ login - admin<br />
-    \ password - admin<br />
+    - login - admin<br />
+    - password - admin<br />
 
 admin panel - /admin
 
